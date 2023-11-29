@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# Check if the PYFILE environment variable is set
+if [ -z "$PYFILE" ]; then
+    echo "Error: PYFILE environment variable not set."
+    exit 1
+fi
+
+# Extract the filename and extension
+filename=$(basename "$PYFILE")
+extension="${filename##*.}"
+filename="${filename%.*}"
+
+# Compile the Python script
+python -m py_compile "$PYFILE"
+
+# Check if compilation was successful
+if [ $? -eq 0 ]; then
+    # Rename the compiled file
+    mv "__pycache__/$filename.cpython-*.pyc" "${filename}c.pyc"
+    echo "Compilation successful. Compiled file: ${filename}c.pyc"
+else
+    echo "Compilation failed."
+    exit 1
+fi
