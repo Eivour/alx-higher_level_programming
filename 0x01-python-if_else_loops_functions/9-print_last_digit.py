@@ -2,11 +2,12 @@
 
 
 def print_last_digit(number):
-    # Ensure the number is positive
-    number = abs(number)
+    # Check if the input is a valid number
+    if not isinstance(number, int):
+        raise ValueError("Input must be an integer")
 
     # Get the last digit
-    last_digit = number % 10
+    last_digit = abs(number) % 10
 
     # Print the last digit
     print(last_digit, end='')
